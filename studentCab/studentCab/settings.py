@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-as3!li%hev391yhgcc9y%!z)nw40h39!asn%m@m_tfu)eh#(zn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['wfakhruaiman.pythonanywhere.com']
+ALLOWED_HOSTS = ['wfakhruaiman.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'knox',
     'rest_framework',
+    'login_app'
 ]
 
 REST_FRAMEWORK = {
@@ -131,3 +132,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'login_app.NewUser'
