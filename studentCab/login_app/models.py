@@ -7,6 +7,7 @@ class NewUser(AbstractUser):
     is_driver = models.BooleanField(default=False)
     is_passenger = models.BooleanField(default=False)
 
+    
     def set_as_driver(self):
         self.is_driver = True
         self.save()

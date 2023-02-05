@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'knox',
     'rest_framework',
-    'login_app'
+    'login_app.apps.LoginAppConfig'
 ]
 
 REST_FRAMEWORK = {
