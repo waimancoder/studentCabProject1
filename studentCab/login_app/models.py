@@ -20,10 +20,12 @@ class PassengerManager(models.Manager):
 
 
 class NewUser(AbstractUser):
-    is_driver = models.BooleanField(default=False)
-    is_passenger = models.BooleanField(default=False)
-    # driver = models.OneToOneField(Driver, on_delete=models.CASCADE, null=True, blank=True)
-    # passenger = models.OneToOneField(Passenger, on_delete=models.CASCADE, null=True, blank=True)
+    is_student = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_normal = models.BooleanField(default=False)
+    matricNo = models.CharField(max_length=10,null=True)
+    staffNo = models.CharField(max_length=255,null=True)
+
 
     objects = UserManager()
     
@@ -35,6 +37,23 @@ class NewUser(AbstractUser):
         self.is_passenger = True
         self.save()
 
+class Student(models.Model):
+    matricNo = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    isDriver = models.BooleanField(default=False)
+    isPassenger = models.BooleanField(default=False)
+    isVerified = models.BooleanField(default=False)
+    # profilePic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    
+
+class Staff(models.Model):
+    
+    staffNo = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    isDriver = models.BooleanField(default=False)
+    isPassenger = models.BooleanField(default=False)
+    isVerified = models.BooleanField(default=False)
+    # profilePic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    
+
 class Driver(models.Model):
     
     objects = DriverManager()
@@ -44,18 +63,14 @@ class Driver(models.Model):
     car_model = models.CharField(max_length=100)
     car_year = models.PositiveSmallIntegerField()
     license_plate = models.CharField(max_length=100)
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
     num_trips = models.PositiveIntegerField()
-    is_driver = models.BooleanField(default=True)
-   
-    
 
+    
 class Passenger(models.Model):
 
     objects = PassengerManager()
 
     phone_number = models.CharField(max_length=20)
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
     num_trips = models.PositiveIntegerField()
 
 

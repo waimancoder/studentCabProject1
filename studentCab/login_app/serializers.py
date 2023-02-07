@@ -4,10 +4,12 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth import get_user_model, authenticate
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404
+from .models import Student
 
 
 # User Serializer
 User = get_user_model()
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -28,7 +30,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('id', 'username', 'email','first_name', 'last_name', 'password1','password2','is_driver')
+        fields = ('id', 'username', 'email','first_name', 'last_name', 'password1','password2','is_student')
         extra_kwargs = {'password1': {'write_only': True}}
 
     def create(self, validated_data):
@@ -41,7 +43,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(validated_data['username'], validated_data['email'],password1)
         user.first_name = validated_data['first_name']
         user.last_name = validated_data['last_name']
-        user.is_driver = True
+        user.is_student = True
         user.save()
 
         return user
@@ -75,10 +77,15 @@ class AuthTokenSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs
 
+class StudentSerializer(serializers.ModelSerializer):
+    
+    isDriver = serializers.BooleanField(default=False)
+    isPassenger = serializers.BooleanField(default=True)
+    isVerified = serializers.BooleanField(default=False)
 
+    class Meta:
+        model = Student
+        fields = ['matricNo', 'isDriver', 'isPassenger', 'isVerified',]
 
-
-
-
-
+        
     
